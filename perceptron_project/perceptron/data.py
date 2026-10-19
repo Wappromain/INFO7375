@@ -52,3 +52,23 @@ def load_unlabeled(test_dir, image_size=(20, 20), invert=False):
     X = np.stack([load_image(os.path.join(test_dir, f), image_size, invert)
                   for f in files], axis=1)
     return X, files
+
+
+def augment(X, Y, copies=10, max_rotate=12, max_shift=1, image_size=(20, 20), seed=0):
+    """Data augmentation: adds `copies` randomly rotated and shifted versions of
+    every training image. The network sees more ways each digit can be written,
+    which helps it generalize to new handwriting. Labels are copied unchanged."""
+    from PIL import Image
+    rng = np.random.default_rng(seed)
+    xs, ys = [X], [Y]
+    for _ in range(copies):
+        cols = []
+        for i in range(X.shape[1]):
+            im = Image.fromarray((X[:, i].reshape(image_size) * 255).astype(np.uint8))
+            im = im.rotate(rng.uniform(-max_rotate, max_rotate), resample=Image.BILINEAR,
+                           translate=(int(rng.integers(-max_shift, max_shift + 1)),
+                                      int(rng.integers(-max_shift, max_shift + 1))))
+            cols.append(np.asarray(im, dtype=np.float64).reshape(-1) / 255.0)
+        xs.append(np.stack(cols, axis=1))
+        ys.append(Y)
+    return np.hstack(xs), np.hstack(ys)

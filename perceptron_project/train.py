@@ -38,6 +38,8 @@ def main():
     ap.add_argument("--batch", type=int, default=10, help="mini batch size; 0 = full batch")
     ap.add_argument("--epochs", type=int, default=1000)
     ap.add_argument("--target-loss", type=float, default=None)
+    ap.add_argument("--augment", type=int, default=0,
+                    help="add this many rotated/shifted copies of each training image")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="results")
     args = ap.parse_args()
@@ -49,12 +51,19 @@ def main():
     X_test, test_files = load_unlabeled(args.test_dir, size)
     print(f"Training set: {X.shape[1]} images, {X.shape[0]} pixels each, classes {classes}")
     print(f"Test set: {X_test.shape[1]} unlabeled images")
+    if args.augment:
+        from perceptron import augment
+        X, Y = augment(X, Y, copies=args.augment, image_size=size, seed=args.seed)
+        print(f"Augmented training set: {X.shape[1]} images")
 
     # optional answer key so we can score the test predictions
     key = {}
     if args.answer_key and os.path.exists(args.answer_key):
         with open(args.answer_key) as f:
             key = {r["file"]: int(r["label"]) for r in csv.DictReader(f)}
+    if key and not all(f in key for f in test_files):
+        print("Answer key does not cover these test images; skipping test scoring.")
+        key = {}
     Y_test = None
     if key:
         from perceptron import one_hot

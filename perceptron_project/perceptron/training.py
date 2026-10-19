@@ -44,12 +44,12 @@ class Training:
             acc = self.accuracy(X, Y)
             self.history["loss"].append(loss)
             self.history["accuracy"].append(acc)
-            if X_val is not None:
+            if X_val is not None and Y_val is not None:
                 self.history["val_accuracy"].append(self.accuracy(X_val, Y_val))
 
             if print_every and (epoch % print_every == 0 or epoch == 1):
                 msg = f"epoch {epoch:5d}  loss {loss:.5f}  train acc {acc:6.1%}"
-                if X_val is not None:
+                if self.history["val_accuracy"]:
                     msg += f"  test acc {self.history['val_accuracy'][-1]:6.1%}"
                 print(msg)
 

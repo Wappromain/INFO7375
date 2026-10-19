@@ -7,4 +7,4 @@ from .loss import LossFunction, MeanSquaredError, BinaryCrossEntropy, get_loss
 from .propagation import ForwardProp, BackProp
 from .optimizer import GradDescent
 from .training import Training
-from .data import load_labeled, load_unlabeled, one_hot
+from .data import load_labeled, load_unlabeled, one_hot, augment
