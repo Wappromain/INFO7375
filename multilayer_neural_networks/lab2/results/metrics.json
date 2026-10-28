@@ -1,0 +1,55 @@
+{
+  "config": {
+    "learning_rate": 0.05,
+    "epochs": 400,
+    "batch_size": 32,
+    "seed": 1,
+    "patience": 60
+  },
+  "best_epoch": 81,
+  "gradient_check_rel_error": 5.177456476174212e-09,
+  "results": {
+    "train": {
+      "loss": 0.1138,
+      "accuracy": 0.9524,
+      "confusion": [
+        [
+          1408,
+          32
+        ],
+        [
+          105,
+          1332
+        ]
+      ]
+    },
+    "validation": {
+      "loss": 0.1421,
+      "accuracy": 0.9359,
+      "confusion": [
+        [
+          293,
+          27
+        ],
+        [
+          14,
+          306
+        ]
+      ]
+    },
+    "real world photos": {
+      "loss": 0.395,
+      "accuracy": 0.6667,
+      "confusion": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}

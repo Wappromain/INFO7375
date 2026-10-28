@@ -1,0 +1,7 @@
+source,variety,label,y(p) = P(orange),predicted,correct
+stock_apple_1,Stock photo apple,0,0.0,apple,True
+stock_apple_2,Stock photo apple,0,0.0,apple,True
+stock_apple_3,Stock photo apple,0,0.0,apple,True
+stock_apple_4,Stock photo apple,0,0.0,apple,True
+stock_orange_1,Stock photo orange,1,0.2697,apple,False
+stock_orange_2,Stock photo orange,1,0.3465,apple,False

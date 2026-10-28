@@ -1,0 +1,46 @@
+Network
+layer 1: 10 neurons, relu    weights 5x10 + 10 biases
+layer 2:  8 neurons, relu    weights 10x8 + 8 biases
+layer 3:  8 neurons, relu    weights 8x8 + 8 biases
+layer 4:  4 neurons, relu    weights 8x4 + 4 biases
+layer 5:  1 neurons, sigmoid weights 4x1 + 1 biases
+total trainable parameters: 261
+
+Config: {"learning_rate": 0.05, "epochs": 400, "batch_size": 32, "seed": 1, "patience": 60}
+
+Gradient check (backprop vs numerical), worst relative error: 5.18e-09 -> PASS
+
+epoch   1  train loss 0.4569  acc 0.833  |  val loss 0.4358  acc 0.872
+epoch  25  train loss 0.1241  acc 0.948  |  val loss 0.1969  acc 0.906
+epoch  50  train loss 0.1102  acc 0.953  |  val loss 0.1607  acc 0.925
+epoch  75  train loss 0.1036  acc 0.955  |  val loss 0.1448  acc 0.936
+epoch 100  train loss 0.0870  acc 0.964  |  val loss 0.1746  acc 0.922
+epoch 125  train loss 0.1003  acc 0.957  |  val loss 0.1463  acc 0.933
+Early stop at epoch 141: no validation improvement for 60 epochs
+Best epoch (lowest validation loss): 81
+
+Final results (best weights)
+train              loss 0.1138  accuracy 0.952  confusion [[TN, FP], [FN, TP]] = [[1408, 32], [105, 1332]]
+validation         loss 0.1421  accuracy 0.936  confusion [[TN, FP], [FN, TP]] = [[293, 27], [14, 306]]
+real world photos  loss 0.3950  accuracy 0.667  confusion [[TN, FP], [FN, TP]] = [[4, 0], [2, 0]]
+
+Predictions on the real world photos
+           variety  label  y(p) = P(orange) predicted  correct
+ Stock photo apple      0            0.0000     apple     True
+ Stock photo apple      0            0.0000     apple     True
+ Stock photo apple      0            0.0000     apple     True
+ Stock photo apple      0            0.0000     apple     True
+Stock photo orange      1            0.2697     apple    False
+Stock photo orange      1            0.3465     apple    False
+
+Validation accuracy by variety
+variety
+Apple Braeburn 1         0.950
+Apple Golden 1           1.000
+Apple Golden 2           1.000
+Apple Granny Smith 1     1.000
+Apple Pink Lady 1        0.650
+Apple Red 1              0.950
+Apple Red Delicious 1    1.000
+Apple Red Yellow 1       0.775
+Orange 1                 0.956
